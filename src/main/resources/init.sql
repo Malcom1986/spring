@@ -25,3 +25,21 @@ CREATE TABLE employees
     details_id int,
     FOREIGN KEY (details_id) REFERENCES details (id)
 );
+
+CREATE TABLE departments
+(
+    id         SERIAL PRIMARY KEY,
+    name       varchar(15),
+    max_salary int,
+    min_salary int
+);
+
+CREATE TABLE employees
+(
+    id            SERIAL PRIMARY KEY,
+    name          varchar(15),
+    surname       varchar(25),
+    salary        int,
+    department_id int
+    FOREIGN KEY (department_id) REFERENCES my_db.departments (id)
+);
