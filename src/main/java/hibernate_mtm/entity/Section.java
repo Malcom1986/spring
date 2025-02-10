@@ -1,6 +1,6 @@
-package hibernate_otm_db.model;
+package hibernate_mtm.entity;
 
-import hibernate_oto.model.Detail;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,45 +9,50 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name = "employees")
+@Table(name = "sections")
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-public class Employee {
-
+public class Section {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "surname")
-    private String surname;
-
-    @Column(name = "salary")
-    private int salary;
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "department_id")
     @ToString.Exclude
-    private Department department;
 
-    public Employee(String name, String surname, int salary) {
+    @ManyToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    @JoinTable(
+            name = "child_section",
+            joinColumns = @JoinColumn(name = "section_id"),
+            inverseJoinColumns = @JoinColumn(name = "child_id")
+    )
+    private List<Child> children = new ArrayList<>();
+
+    public Section(String name) {
         this.name = name;
-        this.surname = surname;
-        this.salary = salary;
+    }
+
+    public void addChild(Child child) {
+        children.add(child);
     }
 }

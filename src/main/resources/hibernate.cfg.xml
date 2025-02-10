@@ -10,7 +10,6 @@
         <property name="connection.password">qwerty</property>
 
         <property name="current_session_context_class">thread</property>
-<!--        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>-->
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.highlight_sql">true</property>

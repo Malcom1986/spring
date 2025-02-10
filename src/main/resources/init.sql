@@ -40,6 +40,31 @@ CREATE TABLE employees
     name          varchar(15),
     surname       varchar(25),
     salary        int,
-    department_id int
-    FOREIGN KEY (department_id) REFERENCES my_db.departments (id)
+    department_id int FOREIGN KEY (department_id) REFERENCES my_db.departments (id)
+);
+
+
+
+CREATE TABLE children
+(
+    id   SERIAL,
+    name varchar(15),
+    age  int,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE section
+(
+    id   SERIAL,
+    name varchar(15),
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE child_section
+(
+    id SERIAl PRIMARY KEY,
+    child_id   int NOT NULL,
+    section_id int NOT NULL,
+    FOREIGN KEY (child_id) REFERENCES children (id),
+    FOREIGN KEY (section_id) REFERENCES section (id)
 );
